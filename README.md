@@ -62,6 +62,26 @@ docker run --rm --env-file .env simple-telegram-bot
 docker run --rm -e TELEGRAM_BOT_TOKEN=你的Token simple-telegram-bot
 ```
 
+## 🧩 使用 Docker Compose
+
+先准备好 `.env` 文件，然后运行：
+
+```bash
+docker compose up -d --build
+```
+
+查看日志：
+
+```bash
+docker compose logs -f
+```
+
+停止机器人：
+
+```bash
+docker compose down
+```
+
 ## 📁 项目结构
 
 ```
@@ -71,6 +91,7 @@ simple-telegram-bot/
 ├── .env.example       # 环境变量示例
 ├── README.md          # 说明文档
 ├── Dockerfile         # Docker 镜像定义
+├── docker-compose.yml # Docker Compose 配置
 ├── .dockerignore      # Docker 构建忽略文件
 └── .gitignore         # Git忽略文件
 ```
