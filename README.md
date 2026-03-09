@@ -42,6 +42,12 @@ cp .env.example .env
 python bot.py
 ```
 
+如果你的环境访问 Telegram 需要代理，可以在 `.env` 中额外配置：
+
+```bash
+TELEGRAM_PROXY=http://127.0.0.1:7890
+```
+
 ## 🐳 使用 Docker 运行
 
 ### 1. 构建镜像

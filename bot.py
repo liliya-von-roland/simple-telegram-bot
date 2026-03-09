@@ -19,8 +19,9 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
-# 从环境变量获取 Bot Token
+# 从环境变量获取 Bot Token / 代理
 BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+PROXY_URL = os.getenv('TELEGRAM_PROXY') or os.getenv('HTTPS_PROXY') or os.getenv('https_proxy')
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """处理 /start 命令"""
@@ -90,8 +91,22 @@ def main():
     if not BOT_TOKEN:
         raise ValueError("未设置 TELEGRAM_BOT_TOKEN 环境变量")
 
+    builder = Application.builder().token(BOT_TOKEN)
+
+    if PROXY_URL:
+        logger.info("检测到代理配置，使用代理启动: %s", PROXY_URL)
+        builder = (
+            builder
+            .proxy(PROXY_URL)
+            .get_updates_proxy(PROXY_URL)
+            .connect_timeout(30)
+            .read_timeout(30)
+            .write_timeout(30)
+            .pool_timeout(30)
+        )
+
     # 创建应用
-    application = Application.builder().token(BOT_TOKEN).build()
+    application = builder.build()
 
     # 添加命令处理器
     application.add_handler(CommandHandler("start", start))
