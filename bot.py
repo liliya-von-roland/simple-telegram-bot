@@ -6,6 +6,7 @@
 
 import os
 import logging
+from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
@@ -16,8 +17,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# 从环境变量获取Bot Token
-BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '你的Bot Token')
+load_dotenv()
+
+# 从环境变量获取 Bot Token
+BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """处理 /start 命令"""
@@ -84,6 +87,9 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     """主函数"""
+    if not BOT_TOKEN:
+        raise ValueError("未设置 TELEGRAM_BOT_TOKEN 环境变量")
+
     # 创建应用
     application = Application.builder().token(BOT_TOKEN).build()
 

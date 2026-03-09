@@ -42,6 +42,26 @@ cp .env.example .env
 python bot.py
 ```
 
+## 🐳 使用 Docker 运行
+
+### 1. 构建镜像
+
+```bash
+docker build -t simple-telegram-bot .
+```
+
+### 2. 运行容器
+
+```bash
+docker run --rm --env-file .env simple-telegram-bot
+```
+
+如果你不想使用 `.env` 文件，也可以直接传环境变量：
+
+```bash
+docker run --rm -e TELEGRAM_BOT_TOKEN=你的Token simple-telegram-bot
+```
+
 ## 📁 项目结构
 
 ```
@@ -50,6 +70,8 @@ simple-telegram-bot/
 ├── requirements.txt    # Python依赖
 ├── .env.example       # 环境变量示例
 ├── README.md          # 说明文档
+├── Dockerfile         # Docker 镜像定义
+├── .dockerignore      # Docker 构建忽略文件
 └── .gitignore         # Git忽略文件
 ```
 
